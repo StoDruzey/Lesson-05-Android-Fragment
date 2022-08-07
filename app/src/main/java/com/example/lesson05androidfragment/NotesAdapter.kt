@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lesson05androidfragment.databinding.ItemNoteBinding
 
-class NotesAdapter(private val items: List<String>) : RecyclerView.Adapter<NoteViewHolder>() {
+class NotesAdapter(
+    private val items: List<String>,
+    private val itemClick: (String) -> Unit
+) : RecyclerView.Adapter<NoteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return NoteViewHolder(
-            binding = ItemNoteBinding.inflate(layoutInflater, parent, false)
+            binding = ItemNoteBinding.inflate(layoutInflater, parent, false),
+            itemClick = itemClick
         )
     }
 
@@ -22,8 +26,14 @@ class NotesAdapter(private val items: List<String>) : RecyclerView.Adapter<NoteV
     }
 }
 
-class NoteViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+class NoteViewHolder(
+    private val binding: ItemNoteBinding,
+    private val itemClick: (String) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: String) {
         binding.textNote.text = item
+        binding.root.setOnClickListener {
+            itemClick(item)
+        }
     }
 }
