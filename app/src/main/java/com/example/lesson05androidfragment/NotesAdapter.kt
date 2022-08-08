@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lesson05androidfragment.databinding.ItemNoteBinding
 
 class NotesAdapter(
-    private val items: List<String>,
-    private val itemClick: (String) -> Unit
+    private val items: List<NoteItem>,
+    private val itemClick: (NoteItem) -> Unit
 ) : RecyclerView.Adapter<NoteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -28,10 +28,10 @@ class NotesAdapter(
 
 class NoteViewHolder(
     private val binding: ItemNoteBinding,
-    private val itemClick: (String) -> Unit
+    private val itemClick: (NoteItem) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: String) {
-        binding.textNote.text = item
+    fun bind(item: NoteItem) {
+        binding.textNote.text = item.note
         binding.root.setOnClickListener {
             itemClick(item)
         }

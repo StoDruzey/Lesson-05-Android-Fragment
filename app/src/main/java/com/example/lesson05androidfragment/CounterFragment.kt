@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.lesson05androidfragment.databinding.FragmentCounterBinding
 
-class CounterFragment : Fragment() {
+class CounterFragment private constructor(): Fragment() {
 
     private var _binding: FragmentCounterBinding? = null
     private val binding get() = requireNotNull(_binding) { "view was destroyed" }
@@ -27,7 +28,7 @@ class CounterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            var counter = 0
+            var counter = requireArguments().getInt(KEY_COUNTER)
             textCounter.text = counter.toString()
 
             textCounter.setOnClickListener {
@@ -46,5 +47,16 @@ class CounterFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val KEY_COUNTER = "key_counter"
+        fun getInstance(counter: Int) : CounterFragment {
+            return CounterFragment().apply {
+                arguments = bundleOf(
+                    KEY_COUNTER to counter
+                )
+            }
+        }
     }
 }

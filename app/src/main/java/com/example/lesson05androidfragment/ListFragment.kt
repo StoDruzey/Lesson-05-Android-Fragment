@@ -30,11 +30,12 @@ class ListFragment : Fragment() {
             recyclerView.layoutManager = LinearLayoutManager(view.context)
 
             val items = List(20) {
-                "item $it"
+                NoteItem("item $it", index = it)
             }
 
             recyclerView.adapter = NotesAdapter(items) {
-                Toast.makeText(requireContext(),it, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(),it, Toast.LENGTH_SHORT).show()
+                pushFragment(it.index)
             }
         }
     }
